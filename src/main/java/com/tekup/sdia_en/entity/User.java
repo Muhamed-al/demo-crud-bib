@@ -1,7 +1,11 @@
 package com.tekup.sdia_en.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +26,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @NotBlank(message = "Name cannot be empty")
     private String username;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Valid Email required")
     private String email;
+
+
+    @Size(min = 8 , max=50  , message = "Password must be between 8 and 50")
     private String password;
 
-    @OneToOne
+    @JsonIgnoreProperties("user")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="profile_id")
     private UserProfile userProfile;
 

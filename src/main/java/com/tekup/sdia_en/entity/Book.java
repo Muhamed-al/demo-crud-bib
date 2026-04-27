@@ -1,10 +1,18 @@
 package com.tekup.sdia_en.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Book {
 
@@ -25,6 +33,7 @@ public class Book {
             joinColumns = @JoinColumn(name="book_id"),
             inverseJoinColumns = @JoinColumn(name="category_id")
     )
+    @JsonIgnoreProperties("books")
     private List<Category> categories;
 
 }

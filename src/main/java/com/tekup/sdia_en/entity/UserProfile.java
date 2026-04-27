@@ -2,7 +2,15 @@ package com.tekup.sdia_en.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class UserProfile {
 
@@ -14,6 +22,6 @@ public class UserProfile {
     private String phone;
     private String address;
 
-    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userProfile")
     private User user;
 }
