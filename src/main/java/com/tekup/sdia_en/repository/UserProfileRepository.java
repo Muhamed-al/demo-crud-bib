@@ -8,5 +8,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile , Long>
 
     UserProfile findByUser(User user);
 
+    UserProfile findByFullname(String fullname);
+
 
 }

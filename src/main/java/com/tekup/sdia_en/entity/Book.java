@@ -3,6 +3,7 @@ package com.tekup.sdia_en.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,9 @@ public class Book {
 
     private String title;
     private String author;
+
+    @Min(value = 1 , message = "Stock lust be greater than 1")
+    private int  stock;
 
     @OneToMany(mappedBy = "book")
     private List<Borrow> borrows;
