@@ -2,7 +2,6 @@ package com.tekup.sdia_en.controller;
 
 
 import com.tekup.sdia_en.entity.User;
-import com.tekup.sdia_en.entity.UserProfile;
 import com.tekup.sdia_en.service.UserProfileService;
 import com.tekup.sdia_en.service.UserService;
 import jakarta.validation.Valid;
@@ -24,13 +23,9 @@ public class UserController {
         return userService.createUser(user);
     }
 
+
     @GetMapping("/users/{id}")
     public User getById(@PathVariable Long id){
-        return this.userService.getById(id);
-    }
-
-    @GetMapping("/users-profile/{id}")
-    public UserProfile getByUSer(@PathVariable Long id){
-        return userProfileService.getProfileByUser(id);
+        return userService.getById(id);
     }
 }

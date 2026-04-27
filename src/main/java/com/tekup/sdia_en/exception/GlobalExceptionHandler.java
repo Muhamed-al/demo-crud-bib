@@ -27,4 +27,10 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationErrors);
     }
+
+    @ExceptionHandler(RessourceExistException.class)
+    public ResponseEntity<?> handleExist(RessourceExistException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
 }
