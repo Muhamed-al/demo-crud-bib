@@ -7,6 +7,9 @@ import com.tekup.sdia_en.repository.UserProfileRepository;
 import com.tekup.sdia_en.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -30,5 +33,31 @@ public class UserService {
             throw new RessourceNotFoundException("User with given ID " + id + " not found");
         }
         return userRepository.findById(id).get();
+    }
+
+    public List<User> getAll(){
+        return userRepository.findAll();
+    }
+
+    public String deleteUSer(Long id){
+        if (!userRepository.existsById(id)){
+            throw new RessourceNotFoundException("User with given id not found");
+        }
+
+        userRepository.deleteById(id);
+        return "User deleted successfully";
+    }
+
+    public User update(Long id , User user){
+        Optional<User> userOptional =  userRepository.findById(id);
+
+        if (!userOptional.isPresent()){
+            throw new RessourceNotFoundException("User with given id not found");
+        }
+
+        User updatedUser = userOptional.get();
+        user.setId(updatedUser.getId());
+        return userRepository.save(user);
+
     }
 }

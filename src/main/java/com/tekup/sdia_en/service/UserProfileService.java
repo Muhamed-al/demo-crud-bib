@@ -19,13 +19,39 @@ public class UserProfileService {
         this.userRepository = userRepository;
     }
 
-    public UserProfile getProfileByUser(Long userId){
+    public UserProfile saveProfile(Long userId , UserProfile userProfile){
+        if (!userRepository.existsById(userId)){
+            throw new RessourceNotFoundException("User with given id not found");
+        }
+        UserProfile userProfile1 = userProfileRepository.save(userProfile);
 
         Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()){
-            return userProfileRepository.findByUser(userOptional.get());
-        }else{
-            throw new RessourceNotFoundException("User With given ID " + userId + " Not found");
+        User user = userOptional.get();
+        user.setUserProfile(userProfile1);
+        userRepository.save(user);
+
+        return userProfile1;
+    }
+
+    public UserProfile getProfileForUser(Long userId){
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isEmpty()){
+            throw new RessourceNotFoundException("User with given not found");
         }
+        User user = userOptional.get();
+        return userProfileRepository.findByUser(user);
+    }
+
+
+    public UserProfile updateProfile(Long id , UserProfile updatedUserProfile){
+        Optional<UserProfile> userProfileOptional = userProfileRepository.findById(id);
+
+        if (userProfileOptional.isEmpty()){
+            throw new RessourceNotFoundException("Profile with given id not found");
+        }
+        UserProfile userProfile = userProfileOptional.get();
+        updatedUserProfile.setId(userProfile.getId());
+        return userProfileRepository.save(updatedUserProfile);
     }
 }

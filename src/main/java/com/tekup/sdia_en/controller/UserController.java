@@ -7,7 +7,10 @@ import com.tekup.sdia_en.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -18,14 +21,28 @@ public class UserController {
         this.userProfileService = userProfileService;
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/create")
     public User create(@RequestBody @Valid User user ){
         return userService.createUser(user);
     }
 
-
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public User getById(@PathVariable Long id){
         return userService.getById(id);
+    }
+
+    @GetMapping("/all")
+    public List<User> getAllUsers(){
+        return userService.getAll();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+        return userService.deleteUSer(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public User updateUser(@PathVariable Long id , @RequestBody User user){
+        return userService.update(id , user);
     }
 }
